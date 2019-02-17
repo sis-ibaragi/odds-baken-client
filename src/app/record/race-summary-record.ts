@@ -3,11 +3,11 @@ export class RaceSummaryRecord {
   kaisaiNm: string;
   raceNo: number;
   umaCnt: number;
-  tnpkOddsTime: string;
-  umrnOddsTime: string;
-  tan10Odds: number;
-  umrn1Odds: number;
-  fuku8Odds: number;
+  tnpkOddsTime: string | null;
+  umrnOddsTime: string | null;
+  tan10Odds: number | null;
+  umrn1Odds: number | null;
+  fuku8Odds: number | null;
   tanAnaFlg: boolean;
   umrnAnaFlg: boolean;
   fukuAnaFlg: boolean;
