@@ -1,6 +1,6 @@
 import { RaceSummaryRecord } from '../../record/race-summary-record';
 
-export const RaceSummaryList: RaceSummaryRecord[] = [
+export const raceSummaryList: RaceSummaryRecord[] = [
   {
     kaisaiCd: '201901TK07',
     kaisaiNm: '1回東京7日',
