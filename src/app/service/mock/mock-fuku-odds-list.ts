@@ -1,6 +1,6 @@
 import { FukuOddsRecord } from '../../record/fuku-odds-record';
 
-export const fanOddsList: FukuOddsRecord[] = [
+export const fukuOddsList: FukuOddsRecord[] = [
   { ninkiNo: 1, umaNo: 16, fukuOdds: 2.2, idoFlg: false },
   { ninkiNo: 2, umaNo: 7, fukuOdds: 2.6, idoFlg: false },
   { ninkiNo: 3, umaNo: 4, fukuOdds: 2.9, idoFlg: false },
