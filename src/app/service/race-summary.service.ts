@@ -8,7 +8,7 @@ import { raceSummaryList } from './mock/mock-race-summary-list';
 export class RaceSummaryService {
   constructor() {}
 
-  getRaceSummaryList(): Promise<RaceSummaryRecord[]> {
+  getRaceSummaryList(kaisaiDt: string): Promise<RaceSummaryRecord[]> {
     return Promise.resolve(raceSummaryList);
   }
 }

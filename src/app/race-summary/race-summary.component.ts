@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
 import { RaceSummaryService } from '../service/race-summary.service';
 import { RaceSummaryRecord } from '../record/race-summary-record';
 
@@ -11,13 +13,15 @@ export class RaceSummaryComponent implements OnInit {
   /** レース一覧 */
   raceSummaryList: RaceSummaryRecord[];
 
-  constructor(private raceSummaryService: RaceSummaryService) {}
+  constructor(private route: ActivatedRoute, private raceSummaryService: RaceSummaryService) {}
 
   ngOnInit() {
-    this.getRaceSummaryList();
+    this.route.paramMap.subscribe((param: ParamMap) => {
+      return this.getRaceSummaryList(param.get('kaisaiDt'));
+    });
   }
 
-  getRaceSummaryList(): void {
-    this.raceSummaryService.getRaceSummaryList().then(list => (this.raceSummaryList = list));
+  getRaceSummaryList(kaisaiDt: string): void {
+    this.raceSummaryService.getRaceSummaryList(kaisaiDt).then(list => (this.raceSummaryList = list));
   }
 }

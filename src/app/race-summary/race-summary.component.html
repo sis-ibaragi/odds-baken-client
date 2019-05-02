@@ -45,7 +45,9 @@
           >
             <td>{{ record.kaisaiCd }}</td>
             <td>{{ record.kaisaiNm }}</td>
-            <td class="text-right">{{ record.raceNo }}</td>
+            <td class="text-right">
+              <a [routerLink]="['/race-odds', record.kaisaiCd, record.raceNo]">{{ record.raceNo }}</a>
+            </td>
             <td class="text-right">{{ record.umaCnt }}</td>
             <td class="text-center">{{ record.tnpkOddsTime }}</td>
             <td class="text-center">{{ record.umrnOddsTime }}</td>

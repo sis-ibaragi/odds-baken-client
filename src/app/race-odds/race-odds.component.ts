@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { UmrnOddsRecord } from '../record/umrn-odds-record';
 import { TanOddsRecord } from '../record/tan-odds-record';
@@ -25,13 +27,17 @@ export class RaceOddsComponent implements OnInit {
   fukuOddsList2: FukuOddsRecord[];
   tnpkOddsDiffList2: TnpkOddsDiffRecord[];
 
-  constructor(private raceOddsService: RaceOddsService) {}
+  constructor(private route: ActivatedRoute, private location: Location, private raceOddsService: RaceOddsService) {}
 
   ngOnInit() {
-    this.getOddsList();
+    this.route.paramMap.subscribe((param: ParamMap) => {
+      const kaisaiCd = param.get('kaisaiCd');
+      const raceNo = +param.get('raceNo');
+      return this.getOddsList(kaisaiCd, raceNo);
+    });
   }
 
-  getOddsList(): void {
+  getOddsList(kaisaiCd: string, raceNo: number): void {
     this.raceOddsService.getUmrnOddsList(this.kaisaiCd, this.raceNo, 1).then(list => (this.umrnOddsList1 = list));
     this.raceOddsService.getTanOddsList(this.kaisaiCd, this.raceNo, 1).then(list => (this.tanOddsList1 = list));
     this.raceOddsService.getFukuOddsList(this.kaisaiCd, this.raceNo, 1).then(list => (this.fukuOddsList1 = list));
@@ -45,5 +51,9 @@ export class RaceOddsComponent implements OnInit {
     this.raceOddsService
       .getTnpkOddsDiffList(this.kaisaiCd, this.raceNo, 2)
       .then(list => (this.tnpkOddsDiffList2 = list));
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }
