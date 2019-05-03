@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
+import { NgbTabChangeEvent, NgbTab } from '@ng-bootstrap/ng-bootstrap';
 
 import { UmrnOddsRecord } from '../record/umrn-odds-record';
 import { TanOddsRecord } from '../record/tan-odds-record';
@@ -51,6 +52,10 @@ export class RaceOddsComponent implements OnInit {
     this.raceOddsService
       .getTnpkOddsDiffList(this.kaisaiCd, this.raceNo, 2)
       .then(list => (this.tnpkOddsDiffList2 = list));
+  }
+
+  changeTab($event: NgbTabChangeEvent) {
+    console.log('beforeTabChange was called... ');
   }
 
   goBack(): void {

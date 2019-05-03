@@ -2,153 +2,146 @@
 <main>
   <section class="py-5">
     <h3 class="mb-5 text-center">2回中山4日 7R</h3>
-    <button (click)="goBack()">戻る</button>
-    <div class="container">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a href="#odds1" class="nav-link active" data-toggle="tab">9:31</a>
-        </li>
-        <li class="nav-item">
-          <a href="#odds2" class="nav-link" data-toggle="tab">10:34</a>
-        </li>
-      </ul>
-      <div class="tab-content py-4">
-        <div id="odds1" class="tab-pane active">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-3 px-0">
-                <h4>馬連</h4>
-                <table class="table-sm table-bordered table-hover">
-                  <thead class="table-header">
-                    <tr>
-                      <th>印</th>
-                      <th>順位</th>
-                      <th>馬番</th>
-                      <th>オッズ</th>
-                      <th>乖離率</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="let record of umrnOddsList1; index as i"
-                      [class.table-danger]="record.kabeFlg && record.ninkiNo > 8"
-                      [class.table-primary]="record.kabeFlg && record.ninkiNo <= 8"
-                      class="py-0 text-right"
-                    >
-                      <td class="text-center">
-                        <select class="form-control form-control-sm p-0" style="height: 22px">
-                          <option value=""></option>
-                          <option value="10">◎</option>
-                          <option value="20">〇</option>
-                          <option value="30">▲</option>
-                          <option value="40">△</option>
-                          <option value="50">☆</option>
-                          <option value="60">✓</option>
-                          <option value="90">消</option>
-                        </select>
-                      </td>
-                      <td>{{ record.ninkiNo | number }}</td>
-                      <td
-                        class="font-weight-bold"
-                        [class.table-warning]="i < 4"
-                        [class.table-success]="i >= 4 && i < 8"
+    <button class="ml-5 my-2" (click)="goBack()">戻る</button>
+    <div class="ml-5">
+      <ngb-tabset (tabChange)="changeTab($event)">
+        <ngb-tab id="oddsTimeNo1" title="9:31">
+          <ng-template ngbTabContent>
+            <div class="container mt-5">
+              <div class="row">
+                <div class="col-sm-3 px-0">
+                  <h4>馬連</h4>
+                  <table class="table-sm table-bordered table-hover">
+                    <thead class="table-header">
+                      <tr>
+                        <th>印</th>
+                        <th>順位</th>
+                        <th>馬番</th>
+                        <th>オッズ</th>
+                        <th>乖離率</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let record of umrnOddsList1; index as i"
+                        [class.table-danger]="record.kabeFlg && record.ninkiNo > 8"
+                        [class.table-primary]="record.kabeFlg && record.ninkiNo <= 8"
+                        class="py-0 text-right"
                       >
-                        {{ record.umaNo | number }}
-                      </td>
-                      <td>{{ record.umrnOdds | number: '1.1-1' }}</td>
-                      <td>{{ record.diffRt | number: '1.2-2' }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="col-sm-2 px-0">
-                <h4>単勝</h4>
-                <table class="table-sm table-bordered table-hover">
-                  <thead class="table-header">
-                    <tr>
-                      <th>順位</th>
-                      <th>馬番</th>
-                      <th>オッズ</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="let record of tanOddsList1"
-                      [class.table-danger]="record.idoFlg"
-                      class="py-0 text-right"
-                    >
-                      <td>{{ record.ninkiNo | number }}</td>
-                      <td class="font-weight-bold">{{ record.umaNo }}</td>
-                      <td>{{ record.tanOdds | number: '1.1-1' }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="col-sm-2 px-0">
-                <h4>複勝</h4>
-                <table class="table-sm table-bordered table-hover">
-                  <thead class="table-header">
-                    <tr>
-                      <th>順位</th>
-                      <th>馬番</th>
-                      <th>オッズ</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="let record of fukuOddsList1"
-                      [class.table-danger]="record.idoFlg"
-                      class="py-0 text-right"
-                    >
-                      <td>{{ record.ninkiNo | number }}</td>
-                      <td class="font-weight-bold">{{ record.umaNo }}</td>
-                      <td>{{ record.fukuOdds | number: '1.1-1' }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="col-sm-5 px-0">
-                <h4>時系列</h4>
-                <table class="table-sm table-bordered table-hover">
-                  <thead class="table-header">
-                    <tr>
-                      <th>順位</th>
-                      <th>馬番</th>
-                      <th>9:30</th>
-                      <th>10:30</th>
-                      <th>上昇度</th>
-                      <th>9:30</th>
-                      <th>10:30</th>
-                      <th>上昇度</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let record of tnpkOddsDiffList1" class="py-0 text-right">
-                      <td>{{ record.ninkiNo | number }}</td>
-                      <td class="font-weight-bold" [class.table-danger]="record.tanUpFlg && record.fukuUpFlg">
-                        {{ record.umaNo | number }}
-                      </td>
-                      <td>{{ record.tanOdds1 | number: '1.1-1' }}</td>
-                      <td>{{ record.tanOdds2 | number: '1.1-1' }}</td>
-                      <td [class.table-warning]="record.tanUpFlg">{{ record.tanUpRt | number: '1.2-2' }}</td>
-                      <td>{{ record.fukuOdds1 | number: '1.1-1' }}</td>
-                      <td>{{ record.fukuOdds2 | number: '1.1-1' }}</td>
-                      <td [class.table-warning]="record.fukuUpFlg">{{ record.fukuUpRt | number: '1.2-2' }}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <td class="text-center">
+                          <select class="form-control form-control-sm p-0" style="height: 22px">
+                            <option value=""></option>
+                            <option value="10">◎</option>
+                            <option value="20">〇</option>
+                            <option value="30">▲</option>
+                            <option value="40">△</option>
+                            <option value="50">☆</option>
+                            <option value="60">✓</option>
+                            <option value="90">消</option>
+                          </select>
+                        </td>
+                        <td>{{ record.ninkiNo | number }}</td>
+                        <td
+                          class="font-weight-bold"
+                          [class.table-warning]="i < 4"
+                          [class.table-success]="i >= 4 && i < 8"
+                        >
+                          {{ record.umaNo | number }}
+                        </td>
+                        <td>{{ record.umrnOdds | number: '1.1-1' }}</td>
+                        <td>{{ record.diffRt | number: '1.2-2' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-2 px-0">
+                  <h4>単勝</h4>
+                  <table class="table-sm table-bordered table-hover">
+                    <thead class="table-header">
+                      <tr>
+                        <th>順位</th>
+                        <th>馬番</th>
+                        <th>オッズ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let record of tanOddsList1"
+                        [class.table-danger]="record.idoFlg"
+                        class="py-0 text-right"
+                      >
+                        <td>{{ record.ninkiNo | number }}</td>
+                        <td class="font-weight-bold">{{ record.umaNo }}</td>
+                        <td>{{ record.tanOdds | number: '1.1-1' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-2 px-0">
+                  <h4>複勝</h4>
+                  <table class="table-sm table-bordered table-hover">
+                    <thead class="table-header">
+                      <tr>
+                        <th>順位</th>
+                        <th>馬番</th>
+                        <th>オッズ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let record of fukuOddsList1"
+                        [class.table-danger]="record.idoFlg"
+                        class="py-0 text-right"
+                      >
+                        <td>{{ record.ninkiNo | number }}</td>
+                        <td class="font-weight-bold">{{ record.umaNo }}</td>
+                        <td>{{ record.fukuOdds | number: '1.1-1' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-5 px-0">
+                  <h4>時系列</h4>
+                  <table class="table-sm table-bordered table-hover">
+                    <thead class="table-header">
+                      <tr>
+                        <th>順位</th>
+                        <th>馬番</th>
+                        <th>9:30</th>
+                        <th>10:30</th>
+                        <th>上昇度</th>
+                        <th>9:30</th>
+                        <th>10:30</th>
+                        <th>上昇度</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let record of tnpkOddsDiffList1" class="py-0 text-right">
+                        <td>{{ record.ninkiNo | number }}</td>
+                        <td class="font-weight-bold" [class.table-danger]="record.tanUpFlg && record.fukuUpFlg">
+                          {{ record.umaNo | number }}
+                        </td>
+                        <td>{{ record.tanOdds1 | number: '1.1-1' }}</td>
+                        <td>{{ record.tanOdds2 | number: '1.1-1' }}</td>
+                        <td [class.table-warning]="record.tanUpFlg">{{ record.tanUpRt | number: '1.2-2' }}</td>
+                        <td>{{ record.fukuOdds1 | number: '1.1-1' }}</td>
+                        <td>{{ record.fukuOdds2 | number: '1.1-1' }}</td>
+                        <td [class.table-warning]="record.fukuUpFlg">{{ record.fukuUpRt | number: '1.2-2' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div id="odds2" class="tab-pane">
-          <div class="container">
-            <div class="row">
-              <p>TEST!!</p>
-            </div>
-          </div>
-        </div>
-      </div>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab id="oddsTimeNo2" title="10:34">
+          <ng-template ngbTabContent>
+            <p>Fuck!!</p>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
     </div>
   </section>
 </main>
