@@ -1,6 +1,6 @@
 import { TnpkOddsDiffRecord } from '../../record/tnpk-odds-diff-record';
 
-export const TnpkOddsDiffList: TnpkOddsDiffRecord[] = [
+export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
   {
     ninkiNo: 1,
     umaNo: 16,
