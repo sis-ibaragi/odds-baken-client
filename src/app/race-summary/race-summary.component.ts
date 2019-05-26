@@ -24,13 +24,15 @@ export class RaceSummaryComponent implements OnInit {
   kaisaiDt: string;
 
   /** 開催日リスト */
-  kaisaiDtSet: Set<string>;
+  kaisaiDtSet: Set<string> = new Set();
+  kaisaiDtSetLoading = false;
 
   /** レース一覧 */
   raceSummaryList: RaceSummaryRecord[];
 
   /** Datepicker 選択可否 */
-  isKaisaiDpDisabled = (date: NgbDate) => !this.kaisaiDtSet.has(this.ngbDateParserFormatter.format(date));
+  //  isKaisaiDpDisabled = (date: NgbDate) => !this.kaisaiDtSet.has(this.ngbDateParserFormatter.format(date));
+  isKaisaiDpDisabled = (date: NgbDate) => !this.isKaisaiDt(date);
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +41,7 @@ export class RaceSummaryComponent implements OnInit {
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private raceSummaryService: RaceSummaryService
   ) {
-    this.getKaisaiDtSet();
+    //    this.getKaisaiDtSet();
   }
 
   ngOnInit() {
@@ -61,14 +63,58 @@ export class RaceSummaryComponent implements OnInit {
     this.router.navigate(['race-summary', this.ngbDateParserFormatter.format(date)]);
   }
 
+  // getKaisaiDtSet より先に Datepicker が初期化されるのでこの実装はダメ
+  isKaisaiDt(date: NgbDate): boolean {
+    console.log(JSON.parse(JSON.stringify(date)));
+    console.log(JSON.parse(JSON.stringify(this.kaisaiDtSetLoading)));
+    //  if (this.kaisaiDtSetLoading) {
+    //  setTimeout(() => {
+    //  return this.isKaisaiDt(date);
+    //      }, 2000);
+    //    }
+    console.log(JSON.parse(JSON.stringify(this.kaisaiDtSet)));
+    if (this.kaisaiDtSet === null || this.kaisaiDtSet.size === 0 /*&& !this.kaisaiDtSetLoading*/) {
+      console.log('* getKaisaiDtSet() was called.');
+      this.getKaisaiDtSet();
+      //      setTimeout(() => {
+      //        return this.isKaisaiDt(date);
+      //      }, 2000);
+    }
+    return this.kaisaiDtSet.has(this.ngbDateParserFormatter.format(date));
+  }
+
   getKaisaiDtSet(): void {
-    this.raceSummaryService.getKaisaiDtList().then(list => {
-      this.kaisaiDtSet = new Set();
-      list.forEach(record => this.kaisaiDtSet.add(record));
-    });
+    this.kaisaiDtSetLoading = true;
+    this.raceSummaryService
+      .getKaisaiDtList()
+      .then(list => {
+        this.kaisaiDtSet = new Set();
+        list.forEach(record => this.kaisaiDtSet.add(record));
+      })
+      .finally(() => (this.kaisaiDtSetLoading = false));
   }
 
   getRaceSummaryList(kaisaiDt: string): void {
     this.raceSummaryService.getRaceSummaryList(kaisaiDt).then(list => (this.raceSummaryList = list));
+  }
+
+  getAJdgeRslt(anaFlgCnt: number): string {
+    let result: string = null;
+    switch (anaFlgCnt) {
+      case 3:
+        result = '◎';
+        break;
+      case 2:
+        result = '〇';
+        break;
+      case 1.5:
+        result = '▲';
+        break;
+      case 1:
+        result = '△';
+        break;
+      default:
+    }
+    return result;
   }
 }
