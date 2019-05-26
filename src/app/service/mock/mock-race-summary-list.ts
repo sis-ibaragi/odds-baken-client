@@ -14,7 +14,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: false,
     fukuAnaFlg: true,
-    jdgeRslt: '▲',
+    anaFlgCnt: 1.5,
   },
   {
     kaisaiCd: '201901TK07',
@@ -29,7 +29,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: true,
     fukuAnaFlg: true,
-    jdgeRslt: '◎',
+    anaFlgCnt: 3,
   },
   {
     kaisaiCd: '201901TK07',
@@ -44,7 +44,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: true,
     fukuAnaFlg: false,
-    jdgeRslt: '〇',
+    anaFlgCnt: 2,
   },
   {
     kaisaiCd: '201901TK07',
@@ -59,7 +59,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201901TK07',
@@ -74,7 +74,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: true,
-    jdgeRslt: '△',
+    anaFlgCnt: 1,
   },
   {
     kaisaiCd: '201901TK07',
@@ -89,7 +89,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: true,
-    jdgeRslt: '△',
+    anaFlgCnt: 1,
   },
   {
     kaisaiCd: '201901TK07',
@@ -104,7 +104,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: true,
     fukuAnaFlg: true,
-    jdgeRslt: '◎',
+    anaFlgCnt: 3,
   },
   {
     kaisaiCd: '201901TK07',
@@ -119,7 +119,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: true,
     fukuAnaFlg: true,
-    jdgeRslt: '▲',
+    anaFlgCnt: 1.5,
   },
   {
     kaisaiCd: '201901TK07',
@@ -134,7 +134,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201901TK07',
@@ -149,7 +149,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: true,
-    jdgeRslt: '△',
+    anaFlgCnt: 1,
   },
   {
     kaisaiCd: '201901TK07',
@@ -164,7 +164,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201901TK07',
@@ -179,7 +179,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: false,
     fukuAnaFlg: true,
-    jdgeRslt: '▲',
+    anaFlgCnt: 1.5,
   },
   {
     kaisaiCd: '201902KY07',
@@ -194,7 +194,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201902KY07',
@@ -209,7 +209,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201902KY07',
@@ -224,7 +224,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: true,
     fukuAnaFlg: true,
-    jdgeRslt: '◎',
+    anaFlgCnt: 3,
   },
   {
     kaisaiCd: '201902KY07',
@@ -239,7 +239,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: true,
     fukuAnaFlg: true,
-    jdgeRslt: '◎',
+    anaFlgCnt: 3,
   },
   {
     kaisaiCd: '201902KY07',
@@ -254,7 +254,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201902KY07',
@@ -269,7 +269,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201902KY07',
@@ -284,7 +284,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: '△',
+    anaFlgCnt: 1,
   },
   {
     kaisaiCd: '201902KY07',
@@ -299,7 +299,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201902KY07',
@@ -314,7 +314,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: false,
     fukuAnaFlg: false,
-    jdgeRslt: null,
+    anaFlgCnt: null,
   },
   {
     kaisaiCd: '201902KY07',
@@ -329,7 +329,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: false,
     fukuAnaFlg: true,
-    jdgeRslt: '▲',
+    anaFlgCnt: 1.5,
   },
   {
     kaisaiCd: '201902KY07',
@@ -344,7 +344,7 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: false,
     umrnAnaFlg: true,
     fukuAnaFlg: true,
-    jdgeRslt: '▲',
+    anaFlgCnt: 1.5,
   },
   {
     kaisaiCd: '201902KY07',
@@ -359,6 +359,6 @@ export const raceSummaryList: RaceSummaryRecord[] = [
     tanAnaFlg: true,
     umrnAnaFlg: true,
     fukuAnaFlg: true,
-    jdgeRslt: '◎',
+    anaFlgCnt: 3,
   },
 ];

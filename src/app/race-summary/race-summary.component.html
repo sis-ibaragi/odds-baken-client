@@ -52,9 +52,9 @@
         <tbody>
           <tr
             *ngFor="let record of raceSummaryList"
-            [class.table-danger]="record.jdgeRslt === '◎'"
-            [class.table-warning]="record.jdgeRslt === '〇'"
-            [class.table-info]="record.jdgeRslt === '▲'"
+            [class.table-danger]="record.anaFlgCnt === 3"
+            [class.table-warning]="record.anaFlgCnt === 2"
+            [class.table-info]="record.anaFlgCnt === 1.5"
           >
             <td>{{ record.kaisaiCd }}</td>
             <td>{{ record.kaisaiNm }}</td>
@@ -70,7 +70,7 @@
             <td class="text-center">{{ record.tanAnaFlg ? '✓' : null }}</td>
             <td class="text-center">{{ record.umrnAnaFlg ? '✓' : null }}</td>
             <td class="text-center">{{ record.fukuAnaFlg ? '✓' : null }}</td>
-            <td class="text-center">{{ record.jdgeRslt }}</td>
+            <td class="text-center">{{ getAJdgeRslt(record.anaFlgCnt) }}</td>
           </tr>
         </tbody>
       </table>
