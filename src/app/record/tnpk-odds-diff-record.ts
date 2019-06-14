@@ -1,5 +1,4 @@
 export class TnpkOddsDiffRecord {
-  ninkiNo: number;
   umaNo: number;
   tanOdds1: number;
   tanOdds2: number;
