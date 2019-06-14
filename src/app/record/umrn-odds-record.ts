@@ -3,5 +3,6 @@ export class UmrnOddsRecord {
   umaNo: number;
   umrnOdds: number | null;
   diffRt: number | null;
-  kabeFlg: boolean;
+  kabeCd: string | null;
+  prevUmrnOddsRecord: UmrnOddsRecord | null = null;
 }
