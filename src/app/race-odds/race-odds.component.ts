@@ -112,6 +112,10 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
     this.getOddsList(this.kaisaiCd, this.raceNo, +this.selectedTab);
   }
 
+  selectMark(record: UmrnOddsRecord, markCd: string): void {
+    this.raceOddsService.postUmaMark(this.kaisaiCd, this.raceNo, record.umaNo, markCd);
+  }
+
   goBack(): void {
     this.location.back();
   }

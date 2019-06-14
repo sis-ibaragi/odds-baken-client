@@ -35,8 +35,13 @@
                 class="py-0 text-right"
               >
                 <td class="text-center">
-                  <select class="form-control form-control-sm p-0" style="height: 22px">
-                    <option *ngFor="let option of markOptions" value="{{ option.value }}">{{ option.label }}</option>
+                  <select
+                    class="form-control form-control-sm p-0"
+                    style="height: 22px"
+                    [value]="record.markCd"
+                    (change)="selectMark(record, $event.target.value)"
+                  >
+                    <option *ngFor="let option of markOptions" [value]="option.value">{{ option.label }}</option>
                   </select>
                 </td>
                 <td>{{ record.ninkiNo | number }}</td>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { first } from 'rxjs/operators';
 
 import { UmrnOddsRecord } from '../record/umrn-odds-record';
@@ -21,6 +21,8 @@ import { kaisaiMap } from './mock/mock-kaisai-map';
   providedIn: 'root',
 })
 export class RaceOddsService {
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
   constructor(private http: HttpClient) {}
 
   getKaisaiInfo(kaisaiCd: string): Promise<KaisaiRecord> {
@@ -87,6 +89,14 @@ export class RaceOddsService {
         });
         return map;
       })
+      .catch(this.handleError);
+  }
+
+  postUmaMark(kaisaiCd: string, raceNo: number, umaNo: number, markCd: string): void {
+    this.http
+      .post(`http://localhost:3000/race/mark/${kaisaiCd}/${raceNo}/${umaNo}`, { markCd }, { headers: this.headers })
+      .pipe(first())
+      .toPromise()
       .catch(this.handleError);
   }
 
