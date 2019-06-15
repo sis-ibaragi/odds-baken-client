@@ -38,7 +38,7 @@
                   <select
                     class="form-control form-control-sm p-0"
                     style="height: 22px"
-                    [value]="record.markCd"
+                    [(ngModel)]="umrnOddsList[i].markCd"
                     (change)="selectMark(record, $event.target.value)"
                   >
                     <option *ngFor="let option of markOptions" [value]="option.value">{{ option.label }}</option>
