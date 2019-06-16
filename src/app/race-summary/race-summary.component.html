@@ -64,9 +64,9 @@
             <td class="text-right">{{ record.umaCnt }}</td>
             <td class="text-center">{{ record.tnpkOddsTime }}</td>
             <td class="text-center">{{ record.umrnOddsTime }}</td>
-            <td class="text-right">{{ record.tan10Odds }}</td>
-            <td class="text-right">{{ record.umrn1Odds }}</td>
-            <td class="text-right">{{ record.fuku8Odds }}</td>
+            <td class="text-right">{{ record.tan10Odds | number: '1.1-1' }}</td>
+            <td class="text-right">{{ record.umrn1Odds | number: '1.1-1' }}</td>
+            <td class="text-right">{{ record.fuku8Odds | number: '1.1-1' }}</td>
             <td class="text-center">{{ record.tanAnaFlg ? '✓' : null }}</td>
             <td class="text-center">{{ record.umrnAnaFlg ? '✓' : null }}</td>
             <td class="text-center">{{ record.fukuAnaFlg ? '✓' : null }}</td>
