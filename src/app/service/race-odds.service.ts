@@ -7,15 +7,9 @@ import { TanOddsRecord } from '../record/tan-odds-record';
 import { FukuOddsRecord } from '../record/fuku-odds-record';
 import { TnpkOddsDiffRecord } from '../record/tnpk-odds-diff-record';
 import { OddsTimeRecord } from '../record/odds-time-record';
-import { umrnOddsList } from './mock/mock-umrn-odds-list';
-import { tanOddsList } from './mock/mock-tan-odds-list';
-import { fukuOddsList } from './mock/mock-fuku-odds-list';
-import { tnpkOddsDiffList } from './mock/mock-tnpk-odds-diff-list';
-import { oddsTimeList, oddsTimeMap } from './mock/mock-odds-time-list';
 import { ValueLabelRecord } from '../record/value-label-record';
 import { markOptions } from './mock/mock-mark-option-list';
 import { KaisaiRecord } from '../record/kaisai-record';
-import { kaisaiMap } from './mock/mock-kaisai-map';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +20,8 @@ export class RaceOddsService {
   constructor(private http: HttpClient) {}
 
   getKaisaiInfo(kaisaiCd: string): Promise<KaisaiRecord> {
-    // return Promise.resolve(kaisaiMap[kaisaiCd]);
     return this.http
-      .get(`http://localhost:3000/kaisai/${kaisaiCd}`)
+      .get(`http://localhost:3000/api/kaisai/${kaisaiCd}`)
       .pipe(first())
       .toPromise()
       .then(data => data as KaisaiRecord)
@@ -36,9 +29,8 @@ export class RaceOddsService {
   }
 
   getOddsTimeList(kaisaiCd: string, raceNo: number): Promise<OddsTimeRecord[]> {
-    // return Promise.resolve(oddsTimeList);
     return this.http
-      .get(`http://localhost:3000/odds/${kaisaiCd}/${raceNo}/odds-times`)
+      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/times`)
       .pipe(first())
       .toPromise()
       .then(data => data as OddsTimeRecord[])
@@ -46,9 +38,8 @@ export class RaceOddsService {
   }
 
   getUmrnOddsList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): Promise<UmrnOddsRecord[]> {
-    // return Promise.resolve(umrnOddsList);
     return this.http
-      .get(`http://localhost:3000/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/umrn`)
+      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/umrn`)
       .pipe(first())
       .toPromise()
       .then(data => data as UmrnOddsRecord[])
@@ -56,9 +47,8 @@ export class RaceOddsService {
   }
 
   getTanOddsList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): Promise<TanOddsRecord[]> {
-    // return Promise.resolve(tanOddsList);
     return this.http
-      .get(`http://localhost:3000/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/tan`)
+      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/tan`)
       .pipe(first())
       .toPromise()
       .then(data => data as TanOddsRecord[])
@@ -66,9 +56,8 @@ export class RaceOddsService {
   }
 
   getFukuOddsList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): Promise<FukuOddsRecord[]> {
-    // return Promise.resolve(fukuOddsList);
     return this.http
-      .get(`http://localhost:3000/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/fuku`)
+      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/fuku`)
       .pipe(first())
       .toPromise()
       .then(data => data as TanOddsRecord[])
@@ -76,9 +65,8 @@ export class RaceOddsService {
   }
 
   getTnpkOddsDiffList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): Promise<Map<number, TnpkOddsDiffRecord>> {
-    // return Promise.resolve(tnpkOddsDiffList);
     return this.http
-      .get(`http://localhost:3000/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/diff`)
+      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/diff`)
       .pipe(first())
       .toPromise()
       .then(data => data as TnpkOddsDiffRecord[])
@@ -94,7 +82,11 @@ export class RaceOddsService {
 
   postUmaMark(kaisaiCd: string, raceNo: number, umaNo: number, markCd: string): void {
     this.http
-      .post(`http://localhost:3000/race/mark/${kaisaiCd}/${raceNo}/${umaNo}`, { markCd }, { headers: this.headers })
+      .post(
+        `http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${umaNo}/mark`,
+        { markCd },
+        { headers: this.headers }
+      )
       .pipe(first())
       .toPromise()
       .catch(this.handleError);
