@@ -1,8 +1,9 @@
-<h2>race-odds</h2>
+<h2 class="text-center py-5">オッズ情報</h2>
 <main>
-  <section class="py-5">
-    <h3 class="mb-5 text-center">{{ kaisaiDt }} {{ kaisaiNm }} {{ raceNo }}R</h3>
-    <button class="ml-5 my-2" (click)="goBack()">戻る</button>
+  <section class="pb-5">
+    <h3 class="pb-5 text-center">{{ kaisaiDt }} {{ kaisaiNm }} {{ raceNo }}R</h3>
+
+    <button class="btn btn-light ml-5 my-2" (click)="goBack()">戻る</button>
     <div class="ml-5">
       <ngb-tabset #oddsTimeTabs (tabChange)="changeTab($event)">
         <ngb-tab

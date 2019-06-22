@@ -1,7 +1,7 @@
-<h2>race-summary</h2>
+<h2 class="text-center py-5">レース情報</h2>
 <main>
-  <section class="py-5 text-center">
-    <h3 class="mb-5">開催日選択</h3>
+  <section class="pb-5 text-center">
+    <h3 class="pb-2">開催日選択</h3>
     <ngb-datepicker
       #kaisaiDp
       [displayMonths]="displayMonths"
@@ -13,8 +13,8 @@
       [(ngModel)]="kaisaiDpModel"
     ></ngb-datepicker>
   </section>
-  <section class="py-5 text-center">
-    <h3 class="mb-5">{{ kaisaiDt }}</h3>
+  <section class="pb-5 text-center" *ngIf="kaisaiDt">
+    <h3 class="my-5">開催日: {{ kaisaiDt }}</h3>
     <div class="container">
       <table class="table-sm table-bordered table-hover">
         <thead class="table-header">
