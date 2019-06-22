@@ -25,13 +25,11 @@ export class RaceSummaryComponent implements OnInit {
 
   /** 開催日リスト */
   kaisaiDtSet: Set<string> = new Set();
-  kaisaiDtSetLoading = false;
 
   /** レース一覧 */
   raceSummaryList: RaceSummaryRecord[];
 
   /** Datepicker 選択可否 */
-  //  isKaisaiDpDisabled = (date: NgbDate) => !this.kaisaiDtSet.has(this.ngbDateParserFormatter.format(date));
   isKaisaiDpDisabled = (date: NgbDate) => !this.isKaisaiDt(date);
 
   constructor(
@@ -40,9 +38,7 @@ export class RaceSummaryComponent implements OnInit {
     private ngbCalendar: NgbCalendar,
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private raceSummaryService: RaceSummaryService
-  ) {
-    //    this.getKaisaiDtSet();
-  }
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((param: ParamMap) => {
@@ -56,6 +52,7 @@ export class RaceSummaryComponent implements OnInit {
           this.getRaceSummaryList(this.kaisaiDt);
         }
       }
+      this.getKaisaiDtSet();
     });
   }
 
@@ -63,35 +60,29 @@ export class RaceSummaryComponent implements OnInit {
     this.router.navigate(['race-summary', this.ngbDateParserFormatter.format(date)]);
   }
 
-  // getKaisaiDtSet より先に Datepicker が初期化されるのでこの実装はダメ
   isKaisaiDt(date: NgbDate): boolean {
-    console.log(JSON.parse(JSON.stringify(date)));
-    console.log(JSON.parse(JSON.stringify(this.kaisaiDtSetLoading)));
-    //  if (this.kaisaiDtSetLoading) {
-    //  setTimeout(() => {
-    //  return this.isKaisaiDt(date);
-    //      }, 2000);
-    //    }
-    console.log(JSON.parse(JSON.stringify(this.kaisaiDtSet)));
-    if (this.kaisaiDtSet === null || this.kaisaiDtSet.size === 0 /*&& !this.kaisaiDtSetLoading*/) {
-      console.log('* getKaisaiDtSet() was called.');
-      this.getKaisaiDtSet();
-      //      setTimeout(() => {
-      //        return this.isKaisaiDt(date);
-      //      }, 2000);
-    }
     return this.kaisaiDtSet.has(this.ngbDateParserFormatter.format(date));
   }
 
   getKaisaiDtSet(): void {
-    this.kaisaiDtSetLoading = true;
     this.raceSummaryService
       .getKaisaiDtList()
       .then(list => {
-        this.kaisaiDtSet = new Set();
         list.forEach(record => this.kaisaiDtSet.add(record));
       })
-      .finally(() => (this.kaisaiDtSetLoading = false));
+      .then(() => {
+        if (this.kaisaiDt) {
+          const date = this.ngbDateParserFormatter.parse(this.kaisaiDt);
+          // DatePicker に kaisaiDtSet の変更を反映させるため、いったん月移動を移動して戻す
+          this.kaisaiDp.navigateTo({ year: date.year, month: date.month - 1 });
+          this.kaisaiDp.navigateTo({ year: date.year, month: date.month });
+          this.kaisaiDpModel = { year: date.year, month: date.month, day: date.day };
+        } else {
+          // DatePicker に kaisaiDtSet の変更を反映させるため、いったん月移動を移動して戻す
+          this.kaisaiDp.navigateTo(this.ngbCalendar.getNext(this.ngbCalendar.getToday(), 'm'));
+          this.kaisaiDp.navigateTo(this.ngbCalendar.getToday());
+        }
+      });
   }
 
   getRaceSummaryList(kaisaiDt: string): void {
