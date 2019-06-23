@@ -75,7 +75,7 @@ export class RaceSummaryComponent implements OnInit {
           const date = this.ngbDateParserFormatter.parse(this.kaisaiDt);
           // DatePicker に kaisaiDtSet の変更を反映させるため、いったん月移動を移動して戻す
           this.kaisaiDp.navigateTo({ year: date.year, month: date.month - 1 });
-          this.kaisaiDp.navigateTo({ year: date.year, month: date.month });
+          this.kaisaiDp.navigateTo({ year: date.year, month: date.month, day: date.day });
           this.kaisaiDpModel = { year: date.year, month: date.month, day: date.day };
         } else {
           // DatePicker に kaisaiDtSet の変更を反映させるため、いったん月移動を移動して戻す
