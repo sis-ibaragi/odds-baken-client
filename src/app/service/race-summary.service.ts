@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { first } from 'rxjs/operators';
 
+import { environment } from '../../environments/environment';
 import { RaceSummaryRecord } from '../record/race-summary-record';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class RaceSummaryService {
 
   getKaisaiDtList(): Promise<string[]> {
     return this.http
-      .get('http://localhost:3000/api/kaisai/dates')
+      .get(`${environment.serverUrl}/api/kaisai/dates`)
       .pipe(first())
       .toPromise()
       .then(data => {
@@ -24,7 +25,7 @@ export class RaceSummaryService {
 
   getRaceSummaryList(kaisaiDt: string): Promise<RaceSummaryRecord[]> {
     return this.http
-      .get(`http://localhost:3000/api/kaisai/${kaisaiDt}/summary`)
+      .get(`${environment.serverUrl}/api/kaisai/${kaisaiDt}/summary`)
       .pipe(first())
       .toPromise()
       .then(data => data as RaceSummaryRecord[])

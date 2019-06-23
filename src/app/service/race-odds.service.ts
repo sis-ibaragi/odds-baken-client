@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { first } from 'rxjs/operators';
 
+import { environment } from '../../environments/environment';
 import { UmrnOddsRecord } from '../record/umrn-odds-record';
 import { TanOddsRecord } from '../record/tan-odds-record';
 import { FukuOddsRecord } from '../record/fuku-odds-record';
@@ -21,7 +22,7 @@ export class RaceOddsService {
 
   getKaisaiInfo(kaisaiCd: string): Promise<KaisaiRecord> {
     return this.http
-      .get(`http://localhost:3000/api/kaisai/${kaisaiCd}`)
+      .get(`${environment.serverUrl}/api/kaisai/${kaisaiCd}`)
       .pipe(first())
       .toPromise()
       .then(data => data as KaisaiRecord)
@@ -30,7 +31,7 @@ export class RaceOddsService {
 
   getOddsTimeList(kaisaiCd: string, raceNo: number): Promise<OddsTimeRecord[]> {
     return this.http
-      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/times`)
+      .get(`${environment.serverUrl}/api/race/odds/${kaisaiCd}/${raceNo}/times`)
       .pipe(first())
       .toPromise()
       .then(data => data as OddsTimeRecord[])
@@ -39,7 +40,7 @@ export class RaceOddsService {
 
   getUmrnOddsList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): Promise<UmrnOddsRecord[]> {
     return this.http
-      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/umrn`)
+      .get(`${environment.serverUrl}/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/umrn`)
       .pipe(first())
       .toPromise()
       .then(data => data as UmrnOddsRecord[])
@@ -48,7 +49,7 @@ export class RaceOddsService {
 
   getTanOddsList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): Promise<TanOddsRecord[]> {
     return this.http
-      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/tan`)
+      .get(`${environment.serverUrl}/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/tan`)
       .pipe(first())
       .toPromise()
       .then(data => data as TanOddsRecord[])
@@ -57,7 +58,7 @@ export class RaceOddsService {
 
   getFukuOddsList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): Promise<FukuOddsRecord[]> {
     return this.http
-      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/fuku`)
+      .get(`${environment.serverUrl}/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/fuku`)
       .pipe(first())
       .toPromise()
       .then(data => data as TanOddsRecord[])
@@ -66,7 +67,7 @@ export class RaceOddsService {
 
   getTnpkOddsDiffList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): Promise<Map<number, TnpkOddsDiffRecord>> {
     return this.http
-      .get(`http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/diff`)
+      .get(`${environment.serverUrl}/api/race/odds/${kaisaiCd}/${raceNo}/${oddsTimeNo}/diff`)
       .pipe(first())
       .toPromise()
       .then(data => data as TnpkOddsDiffRecord[])
@@ -83,7 +84,7 @@ export class RaceOddsService {
   postUmaMark(kaisaiCd: string, raceNo: number, umaNo: number, markCd: string): void {
     this.http
       .post(
-        `http://localhost:3000/api/race/odds/${kaisaiCd}/${raceNo}/${umaNo}/mark`,
+        `${environment.serverUrl}/api/race/odds/${kaisaiCd}/${raceNo}/${umaNo}/mark`,
         { markCd },
         { headers: this.headers }
       )
