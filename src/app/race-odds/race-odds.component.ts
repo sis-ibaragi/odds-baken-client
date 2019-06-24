@@ -27,10 +27,11 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
   selectedTab = '0';
 
   oddsTimeList: OddsTimeRecord[];
+  oddsTimeMap: Map<number, OddsTimeRecord>;
   umrnOddsList: UmrnOddsRecord[];
   tanOddsList: TanOddsRecord[];
   fukuOddsList: FukuOddsRecord[];
-  tnpkOddsDiffList: TnpkOddsDiffRecord[];
+  tnpkOddsDiffMap: Map<number, TnpkOddsDiffRecord>;
   markOptions: ValueLabelRecord[];
 
   oddsDiffTimeFrom: string;
@@ -42,10 +43,9 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
     this.route.paramMap.subscribe((param: ParamMap) => {
       this.kaisaiCd = param.get('kaisaiCd');
       this.raceNo = +param.get('raceNo');
+      this.getMarkOptions();
       this.getKaisaiInfo(this.kaisaiCd);
       this.getOddsTimeList(this.kaisaiCd, this.raceNo);
-      this.getMarkOptions();
-      this.getOddsList(this.kaisaiCd, this.raceNo, +this.selectedTab);
     });
   }
 
@@ -64,14 +64,23 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
   }
 
   getOddsTimeList(kaisaiCd: string, raceNo: number): void {
-    this.raceOddsService.getOddsTimeList(kaisaiCd, raceNo).then(list => (this.oddsTimeList = list));
+    this.raceOddsService.getOddsTimeList(kaisaiCd, raceNo).then(list => {
+      this.oddsTimeList = list;
+      this.selectedTab = '' + list[0].oddsTimeNo;
+      this.oddsTimeTabs.select(this.selectedTab);
+      this.getOddsList(this.kaisaiCd, this.raceNo, +this.selectedTab);
+      this.oddsTimeMap = new Map();
+      list.forEach(record => {
+        this.oddsTimeMap.set(record.oddsTimeNo, record);
+      });
+    });
   }
 
   getOddsList(kaisaiCd: string, raceNo: number, oddsTimeNo: number): void {
     this.umrnOddsList = [];
     this.tanOddsList = [];
     this.fukuOddsList = [];
-    this.tnpkOddsDiffList = [];
+    this.tnpkOddsDiffMap = null;
     this.oddsDiffTimeFrom = null;
     this.oddsDiffTimeTo = null;
 
@@ -80,20 +89,16 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
     this.raceOddsService.getFukuOddsList(kaisaiCd, raceNo, oddsTimeNo).then(list => (this.fukuOddsList = list));
     this.getOddsDiffTime(oddsTimeNo);
     if (oddsTimeNo > 0) {
-      this.raceOddsService
-        .getTnpkOddsDiffList(kaisaiCd, raceNo, oddsTimeNo)
-        .then(list => (this.tnpkOddsDiffList = list));
+      this.raceOddsService.getTnpkOddsDiffList(kaisaiCd, raceNo, oddsTimeNo).then(map => (this.tnpkOddsDiffMap = map));
     }
   }
 
   getOddsDiffTime(oddsTimeNo: number): void {
-    this.raceOddsService.getOddsDiffTime(oddsTimeNo).then(record => {
-      this.oddsDiffTimeTo = record.tnpkOddsTime;
-    });
+    this.oddsDiffTimeFrom = null;
+    this.oddsDiffTimeTo = null;
     if (oddsTimeNo > 0) {
-      this.raceOddsService.getOddsDiffTime(oddsTimeNo - 1).then(record => {
-        this.oddsDiffTimeFrom = record.tnpkOddsTime;
-      });
+      this.oddsDiffTimeTo = this.oddsTimeMap.get(oddsTimeNo).tnpkOddsTime;
+      this.oddsDiffTimeFrom = this.oddsTimeMap.get(oddsTimeNo - 1).tnpkOddsTime;
     }
   }
 
@@ -105,6 +110,10 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
     console.log('beforeTabChange was called... ', $event.activeId, $event.nextId);
     this.selectedTab = $event.nextId;
     this.getOddsList(this.kaisaiCd, this.raceNo, +this.selectedTab);
+  }
+
+  selectMark(record: UmrnOddsRecord, markCd: string): void {
+    this.raceOddsService.postUmaMark(this.kaisaiCd, this.raceNo, record.umaNo, markCd);
   }
 
   goBack(): void {

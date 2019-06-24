@@ -1,8 +1,9 @@
-<h2>race-odds</h2>
+<h2 class="text-center py-5">オッズ情報</h2>
 <main>
-  <section class="py-5">
-    <h3 class="mb-5 text-center">{{ kaisaiDt }} {{ kaisaiNm }} {{ raceNo }}R</h3>
-    <button class="ml-5 my-2" (click)="goBack()">戻る</button>
+  <section class="pb-5">
+    <h3 class="pb-5 text-center">{{ kaisaiDt }} {{ kaisaiNm }} {{ raceNo }}R</h3>
+
+    <button class="btn btn-light ml-5 my-2" (click)="goBack()">戻る</button>
     <div class="ml-5">
       <ngb-tabset #oddsTimeTabs (tabChange)="changeTab($event)">
         <ngb-tab
@@ -30,17 +31,22 @@
             <tbody>
               <tr
                 *ngFor="let record of umrnOddsList; index as i"
-                [class.table-danger]="record.kabeFlg && record.ninkiNo > 8"
-                [class.table-primary]="record.kabeFlg && record.ninkiNo <= 8"
+                [class.table-primary]="record.kabeCd === '01'"
+                [class.table-danger]="record.kabeCd === '10'"
                 class="py-0 text-right"
               >
                 <td class="text-center">
-                  <select class="form-control form-control-sm p-0" style="height: 22px">
-                    <option *ngFor="let option of markOptions" value="{{ option.value }}">{{ option.label }}</option>
+                  <select
+                    class="form-control form-control-sm p-0"
+                    style="height: 22px"
+                    [(ngModel)]="umrnOddsList[i].markCd"
+                    (change)="selectMark(record, $event.target.value)"
+                  >
+                    <option *ngFor="let option of markOptions" [value]="option.value">{{ option.label }}</option>
                   </select>
                 </td>
                 <td>{{ record.ninkiNo | number }}</td>
-                <td class="font-weight-bold" [class.table-warning]="i < 4" [class.table-success]="i >= 4 && i < 8">
+                <td class="font-weight-bold" [class.table-info]="i < 4" [class.table-success]="i >= 4 && i < 8">
                   {{ record.umaNo | number }}
                 </td>
                 <td>{{ record.umrnOdds | number: '1.1-1' }}</td>
@@ -89,7 +95,7 @@
         </div>
         <div class="col-sm-5 px-0">
           <h4>時系列</h4>
-          <table class="table-sm table-bordered table-hover">
+          <table class="table-sm table-bordered table-hover" *ngIf="selectedTab != '0'">
             <thead class="table-header">
               <tr>
                 <th>順位</th>
@@ -103,17 +109,26 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let record of tnpkOddsDiffList" class="py-0 text-right">
+              <tr *ngFor="let record of umrnOddsList" class="py-0 text-right">
                 <td>{{ record.ninkiNo | number }}</td>
-                <td class="font-weight-bold" [class.table-danger]="record.tanUpFlg && record.fukuUpFlg">
+                <td
+                  class="font-weight-bold"
+                  [class.table-danger]="
+                    tnpkOddsDiffMap.get(record.umaNo).tanUpFlg && tnpkOddsDiffMap.get(record.umaNo).fukuUpFlg
+                  "
+                >
                   {{ record.umaNo | number }}
                 </td>
-                <td>{{ record.tanOdds1 | number: '1.1-1' }}</td>
-                <td>{{ record.tanOdds2 | number: '1.1-1' }}</td>
-                <td [class.table-warning]="record.tanUpFlg">{{ record.tanUpRt | number: '1.2-2' }}</td>
-                <td>{{ record.fukuOdds1 | number: '1.1-1' }}</td>
-                <td>{{ record.fukuOdds2 | number: '1.1-1' }}</td>
-                <td [class.table-warning]="record.fukuUpFlg">{{ record.fukuUpRt | number: '1.2-2' }}</td>
+                <td>{{ tnpkOddsDiffMap.get(record.umaNo).tanOdds1 | number: '1.1-1' }}</td>
+                <td>{{ tnpkOddsDiffMap.get(record.umaNo).tanOdds2 | number: '1.1-1' }}</td>
+                <td [class.table-warning]="tnpkOddsDiffMap.get(record.umaNo).tanUpFlg">
+                  {{ tnpkOddsDiffMap.get(record.umaNo).tanUpRt | number: '1.2-2' }}
+                </td>
+                <td>{{ tnpkOddsDiffMap.get(record.umaNo).fukuOdds1 | number: '1.1-1' }}</td>
+                <td>{{ tnpkOddsDiffMap.get(record.umaNo).fukuOdds2 | number: '1.1-1' }}</td>
+                <td [class.table-warning]="tnpkOddsDiffMap.get(record.umaNo).fukuUpFlg">
+                  {{ tnpkOddsDiffMap.get(record.umaNo).fukuUpRt | number: '1.2-2' }}
+                </td>
               </tr>
             </tbody>
           </table>

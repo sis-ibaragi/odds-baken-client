@@ -11,5 +11,5 @@ export class RaceSummaryRecord {
   tanAnaFlg: boolean;
   umrnAnaFlg: boolean;
   fukuAnaFlg: boolean;
-  jdgeRslt: string;
+  anaFlgCnt: number;
 }

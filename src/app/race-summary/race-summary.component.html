@@ -1,7 +1,7 @@
-<h2>race-summary</h2>
+<h2 class="text-center py-5">レース情報</h2>
 <main>
-  <section class="py-5 text-center">
-    <h3 class="mb-5">開催日選択</h3>
+  <section class="pb-5 text-center">
+    <h3 class="pb-2">開催日選択</h3>
     <ngb-datepicker
       #kaisaiDp
       [displayMonths]="displayMonths"
@@ -13,10 +13,10 @@
       [(ngModel)]="kaisaiDpModel"
     ></ngb-datepicker>
   </section>
-  <section class="py-5 text-center">
-    <h3 class="mb-5">{{ kaisaiDt }}</h3>
+  <section class="pb-5 text-center" *ngIf="kaisaiDt">
+    <h3 class="my-5">開催日: {{ kaisaiDt }}</h3>
     <div class="container">
-      <table class="table-sm table-bordered table-hover">
+      <table class="table-sm table-bordered table-hover mx-auto">
         <thead class="table-header">
           <tr>
             <th rowspan="2">開催コード</th>
@@ -52,9 +52,9 @@
         <tbody>
           <tr
             *ngFor="let record of raceSummaryList"
-            [class.table-danger]="record.jdgeRslt === '◎'"
-            [class.table-warning]="record.jdgeRslt === '〇'"
-            [class.table-info]="record.jdgeRslt === '▲'"
+            [class.table-danger]="record.anaFlgCnt === 3"
+            [class.table-warning]="record.anaFlgCnt === 2"
+            [class.table-info]="record.anaFlgCnt === 1.5"
           >
             <td>{{ record.kaisaiCd }}</td>
             <td>{{ record.kaisaiNm }}</td>
@@ -64,13 +64,13 @@
             <td class="text-right">{{ record.umaCnt }}</td>
             <td class="text-center">{{ record.tnpkOddsTime }}</td>
             <td class="text-center">{{ record.umrnOddsTime }}</td>
-            <td class="text-right">{{ record.tan10Odds }}</td>
-            <td class="text-right">{{ record.umrn1Odds }}</td>
-            <td class="text-right">{{ record.fuku8Odds }}</td>
+            <td class="text-right">{{ record.tan10Odds | number: '1.1-1' }}</td>
+            <td class="text-right">{{ record.umrn1Odds | number: '1.1-1' }}</td>
+            <td class="text-right">{{ record.fuku8Odds | number: '1.1-1' }}</td>
             <td class="text-center">{{ record.tanAnaFlg ? '✓' : null }}</td>
             <td class="text-center">{{ record.umrnAnaFlg ? '✓' : null }}</td>
             <td class="text-center">{{ record.fukuAnaFlg ? '✓' : null }}</td>
-            <td class="text-center">{{ record.jdgeRslt }}</td>
+            <td class="text-center">{{ getAJdgeRslt(record.anaFlgCnt) }}</td>
           </tr>
         </tbody>
       </table>

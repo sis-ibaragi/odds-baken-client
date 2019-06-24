@@ -2,6 +2,8 @@ export class UmrnOddsRecord {
   ninkiNo: number;
   umaNo: number;
   umrnOdds: number | null;
+  markCd: string| null;
   diffRt: number | null;
-  kabeFlg: boolean;
+  kabeCd: string | null;
+  prevUmrnOddsRecord: UmrnOddsRecord | null = null;
 }

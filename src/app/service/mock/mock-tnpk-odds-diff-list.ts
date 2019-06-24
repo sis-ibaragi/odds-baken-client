@@ -2,7 +2,6 @@ import { TnpkOddsDiffRecord } from '../../record/tnpk-odds-diff-record';
 
 export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
   {
-    ninkiNo: 1,
     umaNo: 16,
     tanOdds1: 5.1,
     tanOdds2: 4.4,
@@ -14,7 +13,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 2,
     umaNo: 4,
     tanOdds1: 5.8,
     tanOdds2: 6.7,
@@ -26,7 +24,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 3,
     umaNo: 7,
     tanOdds1: 6.8,
     tanOdds2: 6.2,
@@ -38,7 +35,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 4,
     umaNo: 8,
     tanOdds1: 10.3,
     tanOdds2: 9.0,
@@ -50,7 +46,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 5,
     umaNo: 10,
     tanOdds1: 14.3,
     tanOdds2: 16.5,
@@ -62,7 +57,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 6,
     umaNo: 12,
     tanOdds1: 20.8,
     tanOdds2: 21.1,
@@ -74,7 +68,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 7,
     umaNo: 13,
     tanOdds1: 24.4,
     tanOdds2: 21.9,
@@ -86,7 +79,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: true,
   },
   {
-    ninkiNo: 8,
     umaNo: 18,
     tanOdds1: 29.4,
     tanOdds2: 20.7,
@@ -98,7 +90,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: true,
   },
   {
-    ninkiNo: 9,
     umaNo: 11,
     tanOdds1: 19.5,
     tanOdds2: 22.8,
@@ -110,7 +101,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: true,
   },
   {
-    ninkiNo: 10,
     umaNo: 6,
     tanOdds1: 15.8,
     tanOdds2: 16.8,
@@ -122,7 +112,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 11,
     umaNo: 1,
     tanOdds1: 11.7,
     tanOdds2: 12.3,
@@ -134,7 +123,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 12,
     umaNo: 14,
     tanOdds1: 31.3,
     tanOdds2: 34.1,
@@ -146,7 +134,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 13,
     umaNo: 5,
     tanOdds1: 26.0,
     tanOdds2: 29.9,
@@ -158,7 +145,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: true,
   },
   {
-    ninkiNo: 14,
     umaNo: 3,
     tanOdds1: 11.1,
     tanOdds2: 13.4,
@@ -170,7 +156,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 15,
     umaNo: 17,
     tanOdds1: 35.3,
     tanOdds2: 33.5,
@@ -182,7 +167,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: true,
   },
   {
-    ninkiNo: 16,
     umaNo: 2,
     tanOdds1: 51.7,
     tanOdds2: 48.7,
@@ -194,7 +178,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: true,
   },
   {
-    ninkiNo: 17,
     umaNo: 9,
     tanOdds1: 45.2,
     tanOdds2: 48.7,
@@ -206,7 +189,6 @@ export const tnpkOddsDiffList: TnpkOddsDiffRecord[] = [
     fukuUpFlg: false,
   },
   {
-    ninkiNo: 18,
     umaNo: 15,
     tanOdds1: 54.5,
     tanOdds2: 60.2,

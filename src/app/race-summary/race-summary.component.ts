@@ -24,13 +24,13 @@ export class RaceSummaryComponent implements OnInit {
   kaisaiDt: string;
 
   /** 開催日リスト */
-  kaisaiDtSet: Set<string>;
+  kaisaiDtSet: Set<string> = new Set();
 
   /** レース一覧 */
   raceSummaryList: RaceSummaryRecord[];
 
   /** Datepicker 選択可否 */
-  isKaisaiDpDisabled = (date: NgbDate) => !this.kaisaiDtSet.has(this.ngbDateParserFormatter.format(date));
+  isKaisaiDpDisabled = (date: NgbDate) => !this.isKaisaiDt(date);
 
   constructor(
     private route: ActivatedRoute,
@@ -38,9 +38,7 @@ export class RaceSummaryComponent implements OnInit {
     private ngbCalendar: NgbCalendar,
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private raceSummaryService: RaceSummaryService
-  ) {
-    this.getKaisaiDtSet();
-  }
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((param: ParamMap) => {
@@ -54,6 +52,7 @@ export class RaceSummaryComponent implements OnInit {
           this.getRaceSummaryList(this.kaisaiDt);
         }
       }
+      this.getKaisaiDtSet();
     });
   }
 
@@ -61,14 +60,52 @@ export class RaceSummaryComponent implements OnInit {
     this.router.navigate(['race-summary', this.ngbDateParserFormatter.format(date)]);
   }
 
+  isKaisaiDt(date: NgbDate): boolean {
+    return this.kaisaiDtSet.has(this.ngbDateParserFormatter.format(date));
+  }
+
   getKaisaiDtSet(): void {
-    this.raceSummaryService.getKaisaiDtList().then(list => {
-      this.kaisaiDtSet = new Set();
-      list.forEach(record => this.kaisaiDtSet.add(record));
-    });
+    this.raceSummaryService
+      .getKaisaiDtList()
+      .then(list => {
+        list.forEach(record => this.kaisaiDtSet.add(record));
+      })
+      .then(() => {
+        if (this.kaisaiDt) {
+          const date = this.ngbDateParserFormatter.parse(this.kaisaiDt);
+          // DatePicker に kaisaiDtSet の変更を反映させるため、いったん月移動を移動して戻す
+          this.kaisaiDp.navigateTo({ year: date.year, month: date.month - 1 });
+          this.kaisaiDp.navigateTo({ year: date.year, month: date.month, day: date.day });
+          this.kaisaiDpModel = { year: date.year, month: date.month, day: date.day };
+        } else {
+          // DatePicker に kaisaiDtSet の変更を反映させるため、いったん月移動を移動して戻す
+          this.kaisaiDp.navigateTo(this.ngbCalendar.getNext(this.ngbCalendar.getToday(), 'm'));
+          this.kaisaiDp.navigateTo(this.ngbCalendar.getToday());
+        }
+      });
   }
 
   getRaceSummaryList(kaisaiDt: string): void {
     this.raceSummaryService.getRaceSummaryList(kaisaiDt).then(list => (this.raceSummaryList = list));
+  }
+
+  getAJdgeRslt(anaFlgCnt: number): string {
+    let result: string = null;
+    switch (anaFlgCnt) {
+      case 3:
+        result = '◎';
+        break;
+      case 2:
+        result = '〇';
+        break;
+      case 1.5:
+        result = '▲';
+        break;
+      case 1:
+        result = '△';
+        break;
+      default:
+    }
+    return result;
   }
 }
