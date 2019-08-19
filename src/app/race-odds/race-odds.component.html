@@ -1,16 +1,37 @@
-<h2 class="text-center py-5">オッズ情報</h2>
 <main>
-  <section class="pb-5">
-    <h3 class="pb-5 text-center">{{ kaisaiDt }} {{ kaisaiNm }} {{ raceNo }}R</h3>
-
-    <button class="btn btn-light ml-5 my-2" (click)="goBack()">戻る</button>
+  <section class="py-2">
+    <nav *ngFor="let kaisaiRecord of kaisaiList" class="navbar navbar-expand-md navbar-light bg-light py-1">
+      <span class="navbar-brand">{{kaisaiRecord.kaisaiNm}}</span>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li *ngFor="let raceRecord of raceSummaryMap.get(kaisaiRecord.kaisaiCd)" class="nav-item px-3 mx-1"
+            [class.table-danger]="raceRecord.anaFlgCnt === 3" [class.table-warning]="raceRecord.anaFlgCnt === 2"
+            [class.table-info]="raceRecord.anaFlgCnt === 1.5">
+            <a *ngIf="raceRecord.kaisaiCd !== kaisaiCd || raceRecord.raceNo !== raceNo" class="nav-link active"
+              [routerLink]="['/race-odds', raceRecord.kaisaiCd, raceRecord.raceNo]">
+              {{ raceRecord.raceNo}}R
+            </a>
+            <a *ngIf="raceRecord.kaisaiCd === kaisaiCd && raceRecord.raceNo === raceNo" class="nav-link disabled"
+              [routerLink]="['/race-odds', raceRecord.kaisaiCd, raceRecord.raceNo]">
+              {{ raceRecord.raceNo}}R
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </section>
+  <section class="py-5">
+    <h3 class="text-center">{{ kaisaiDt }} {{ kaisaiNm }}</h3>
+    <h3 class="text-center">{{ raceNo }}R</h3>
+    <button class="btn btn-light ml-5 my-2" [routerLink]="['/race-summary', kaisaiDt]">戻る</button>
     <div class="ml-5">
       <ngb-tabset #oddsTimeTabs (tabChange)="changeTab($event)">
-        <ngb-tab
-          *ngFor="let timeRecord of oddsTimeList"
-          id="{{ timeRecord.oddsTimeNo }}"
-          title="{{ timeRecord.tnpkOddsTime }}"
-        >
+        <ngb-tab *ngFor="let timeRecord of oddsTimeList" id="{{ timeRecord.oddsTimeNo }}"
+          title="{{ timeRecord.tnpkOddsTime }}">
         </ngb-tab>
       </ngb-tabset>
     </div>
@@ -29,19 +50,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                *ngFor="let record of umrnOddsList; index as i"
-                [class.table-primary]="record.kabeCd === '01'"
-                [class.table-danger]="record.kabeCd === '10'"
-                class="py-0 text-right"
-              >
+              <tr *ngFor="let record of umrnOddsList; index as i" [class.table-primary]="record.kabeCd === '01'"
+                [class.table-danger]="record.kabeCd === '10'" class="py-0 text-right">
                 <td class="text-center">
-                  <select
-                    class="form-control form-control-sm p-0"
-                    style="height: 22px"
-                    [(ngModel)]="umrnOddsList[i].markCd"
-                    (change)="selectMark(record, $event.target.value)"
-                  >
+                  <select class="form-control form-control-sm p-0" style="height: 22px"
+                    [(ngModel)]="umrnOddsList[i].markCd" (change)="selectMark(record, $event.target.value)">
                     <option *ngFor="let option of markOptions" [value]="option.value">{{ option.label }}</option>
                   </select>
                 </td>
@@ -111,12 +124,9 @@
             <tbody>
               <tr *ngFor="let record of umrnOddsList" class="py-0 text-right">
                 <td>{{ record.ninkiNo | number }}</td>
-                <td
-                  class="font-weight-bold"
-                  [class.table-danger]="
+                <td class="font-weight-bold" [class.table-danger]="
                     tnpkOddsDiffMap.get(record.umaNo).tanUpFlg && tnpkOddsDiffMap.get(record.umaNo).fukuUpFlg
-                  "
-                >
+                  ">
                   {{ record.umaNo | number }}
                 </td>
                 <td>{{ tnpkOddsDiffMap.get(record.umaNo).tanOdds1 | number: '1.1-1' }}</td>

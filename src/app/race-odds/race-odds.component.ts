@@ -3,13 +3,16 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
+import { RaceOddsService } from '../service/race-odds.service';
+import { RaceSummaryService } from '../service/race-summary.service';
 import { UmrnOddsRecord } from '../record/umrn-odds-record';
 import { TanOddsRecord } from '../record/tan-odds-record';
 import { FukuOddsRecord } from '../record/fuku-odds-record';
 import { TnpkOddsDiffRecord } from '../record/tnpk-odds-diff-record';
-import { RaceOddsService } from '../service/race-odds.service';
 import { OddsTimeRecord } from '../record/odds-time-record';
 import { ValueLabelRecord } from '../record/value-label-record';
+import { KaisaiRecord } from '../record/kaisai-record';
+import { RaceSummaryRecord } from '../record/race-summary-record';
 
 @Component({
   selector: 'app-race-odds',
@@ -17,10 +20,20 @@ import { ValueLabelRecord } from '../record/value-label-record';
   styleUrls: ['./race-odds.component.css'],
 })
 export class RaceOddsComponent implements OnInit, AfterViewChecked {
+
+  /** 開催コード */
   kaisaiCd: string;
+  /** 開催名 */
   kaisaiNm: string;
+  /** 開催日 */
   kaisaiDt: string;
+  /** レース番号 */
   raceNo: number;
+
+  /** 開催一覧 */
+  kaisaiList: KaisaiRecord[];
+  /** レース一覧 */
+  raceSummaryMap: Map<string, RaceSummaryRecord[]>;
 
   @ViewChild('oddsTimeTabs')
   oddsTimeTabs: NgbTabset;
@@ -37,7 +50,12 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
   oddsDiffTimeFrom: string;
   oddsDiffTimeTo: string;
 
-  constructor(private route: ActivatedRoute, private location: Location, private raceOddsService: RaceOddsService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private raceOddsService: RaceOddsService,
+    private raceSummaryService: RaceSummaryService
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((param: ParamMap) => {
@@ -60,7 +78,19 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
     this.raceOddsService.getKaisaiInfo(kaisaiCd).then(record => {
       this.kaisaiNm = record.kaisaiNm;
       this.kaisaiDt = record.kaisaiDt;
-    });
+    }).then(() => this.getKaisaiRaceList());
+  }
+
+  getKaisaiRaceList(): void {
+    this.raceSummaryService.getKaisaiList(this.kaisaiDt)
+      .then(list => (this.kaisaiList = list))
+      .then(() => {
+        this.raceSummaryMap = new Map<string, RaceSummaryRecord[]>();
+        this.kaisaiList.forEach(element => {
+          this.raceSummaryService.getRaceSummaryList(element.kaisaiCd)
+            .then(list => (this.raceSummaryMap.set(element.kaisaiCd, list)));
+        });
+      });
   }
 
   getOddsTimeList(kaisaiCd: string, raceNo: number): void {
@@ -116,7 +146,4 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
     this.raceOddsService.postUmaMark(this.kaisaiCd, this.raceNo, record.umaNo, markCd);
   }
 
-  goBack(): void {
-    this.location.back();
-  }
 }
