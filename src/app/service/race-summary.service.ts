@@ -33,9 +33,9 @@ export class RaceSummaryService {
       .catch(this.handleError);
   }
 
-  getRaceSummaryList(kaisaiDt: string): Promise<RaceSummaryRecord[]> {
+  getRaceSummaryList(kaisaiCd: string): Promise<RaceSummaryRecord[]> {
     return this.http
-      .get(`${environment.serverUrl}/api/kaisai/${kaisaiDt}/summary`)
+      .get(`${environment.serverUrl}/api/kaisai/${kaisaiCd}/summary`)
       .pipe(first())
       .toPromise()
       .then(data => data as RaceSummaryRecord[])
