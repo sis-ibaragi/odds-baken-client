@@ -4,12 +4,13 @@ import { first } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { RaceSummaryRecord } from '../record/race-summary-record';
+import { KaisaiRecord } from '../record/kaisai-record';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RaceSummaryService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getKaisaiDtList(): Promise<string[]> {
     return this.http
@@ -20,6 +21,15 @@ export class RaceSummaryService {
         console.log(data);
         return data as string[];
       })
+      .catch(this.handleError);
+  }
+
+  getKaisaiList(kaisaiDt: string): Promise<KaisaiRecord[]> {
+    return this.http
+      .get(`${environment.serverUrl}/api/kaisai/${kaisaiDt}`)
+      .pipe(first())
+      .toPromise()
+      .then(data => data as KaisaiRecord[])
       .catch(this.handleError);
   }
 
