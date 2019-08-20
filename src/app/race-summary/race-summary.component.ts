@@ -4,6 +4,7 @@ import { NgbDatepicker, NgbDateStruct, NgbDate, NgbCalendar, NgbDateParserFormat
 
 import { RaceSummaryService } from '../service/race-summary.service';
 import { RaceSummaryRecord } from '../record/race-summary-record';
+import { KaisaiRecord } from '../record/kaisai-record';
 
 @Component({
   selector: 'app-race-summary',
@@ -26,8 +27,11 @@ export class RaceSummaryComponent implements OnInit {
   /** 開催日リスト */
   kaisaiDtSet: Set<string> = new Set();
 
+  /** 開催一覧 */
+  kaisaiList: KaisaiRecord[];
+
   /** レース一覧 */
-  raceSummaryList: RaceSummaryRecord[];
+  raceSummaryMap: Map<string, RaceSummaryRecord[]>;
 
   /** Datepicker 選択可否 */
   isKaisaiDpDisabled = (date: NgbDate) => !this.isKaisaiDt(date);
@@ -38,7 +42,7 @@ export class RaceSummaryComponent implements OnInit {
     private ngbCalendar: NgbCalendar,
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private raceSummaryService: RaceSummaryService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((param: ParamMap) => {
@@ -49,7 +53,7 @@ export class RaceSummaryComponent implements OnInit {
           this.kaisaiDt = this.ngbDateParserFormatter.format(date);
           this.kaisaiDpModel = { year: date.year, month: date.month, day: date.day };
           this.kaisaiDp.navigateTo({ year: date.year, month: date.month });
-          this.getRaceSummaryList(this.kaisaiDt);
+          this.getKaisaiList(this.kaisaiDt);
         }
       }
       this.getKaisaiDtSet();
@@ -85,8 +89,18 @@ export class RaceSummaryComponent implements OnInit {
       });
   }
 
-  getRaceSummaryList(kaisaiDt: string): void {
-    this.raceSummaryService.getRaceSummaryList(kaisaiDt).then(list => (this.raceSummaryList = list));
+  getKaisaiList(kaisaiDt: string): void {
+    this.raceSummaryService.getKaisaiList(kaisaiDt).then(list => (this.kaisaiList = list)).then(() => {
+      this.raceSummaryMap = new Map<string, RaceSummaryRecord[]>();
+      this.kaisaiList.forEach(element => {
+        this.getRaceSummaryList(element.kaisaiCd);
+      });
+    });
+  }
+
+  getRaceSummaryList(kaisaiCd: string): void {
+    this.raceSummaryService.getRaceSummaryList(kaisaiCd)
+      .then(list => (this.raceSummaryMap.set(kaisaiCd, list)));
   }
 
   getAJdgeRslt(anaFlgCnt: number): string {
