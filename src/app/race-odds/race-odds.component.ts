@@ -35,6 +35,8 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
   /** レース一覧 */
   raceSummaryMap: Map<string, RaceSummaryRecord[]>;
 
+  collapsed = true;
+
   @ViewChild('oddsTimeTabs')
   oddsTimeTabs: NgbTabset;
   selectedTab = '0';
@@ -145,5 +147,4 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
   selectMark(record: UmrnOddsRecord, markCd: string): void {
     this.raceOddsService.postUmaMark(this.kaisaiCd, this.raceNo, record.umaNo, markCd);
   }
-
 }

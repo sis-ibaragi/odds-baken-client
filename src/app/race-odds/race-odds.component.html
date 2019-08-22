@@ -1,24 +1,24 @@
 <main>
-  <section class="py-2">
-    <nav *ngFor="let kaisaiRecord of kaisaiList" class="navbar navbar-expand-md navbar-light bg-light py-1">
-      <span class="navbar-brand">{{kaisaiRecord.kaisaiNm}}</span>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <section>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+      <span class="navbar-brand"></span>
+      <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed"
+        aria-label="Toggle navigation" (click)="collapsed = !collapsed">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li *ngFor="let raceRecord of raceSummaryMap.get(kaisaiRecord.kaisaiCd)" class="nav-item px-3 mx-1"
-            [class.table-danger]="raceRecord.anaFlgCnt === 3" [class.table-warning]="raceRecord.anaFlgCnt === 2"
-            [class.table-info]="raceRecord.anaFlgCnt === 1.5">
-            <a *ngIf="raceRecord.kaisaiCd !== kaisaiCd || raceRecord.raceNo !== raceNo" class="nav-link active"
-              [routerLink]="['/race-odds', raceRecord.kaisaiCd, raceRecord.raceNo]">
-              {{ raceRecord.raceNo}}R
+
+      <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+        <ul class="navbar-nav mr-auto">
+          <li *ngFor="let kaisaiRecord of kaisaiList" class="nav-item" ngbDropdown>
+            <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown1" role="button">
+              {{kaisaiRecord.kaisaiNm}}
             </a>
-            <a *ngIf="raceRecord.kaisaiCd === kaisaiCd && raceRecord.raceNo === raceNo" class="nav-link disabled"
-              [routerLink]="['/race-odds', raceRecord.kaisaiCd, raceRecord.raceNo]">
-              {{ raceRecord.raceNo}}R
-            </a>
+            <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
+              <a *ngFor="let raceRecord of raceSummaryMap.get(kaisaiRecord.kaisaiCd)" class="dropdown-item"
+                [class.alert-danger]="raceRecord.anaFlgCnt === 3" [class.alert-warning]="raceRecord.anaFlgCnt === 2"
+                [class.alert-info]="raceRecord.anaFlgCnt === 1.5" (click)="$event.preventDefault()"
+                [routerLink]="['/race-odds', raceRecord.kaisaiCd, raceRecord.raceNo]">{{ raceRecord.raceNo}}R</a>
+            </div>
           </li>
         </ul>
       </div>
