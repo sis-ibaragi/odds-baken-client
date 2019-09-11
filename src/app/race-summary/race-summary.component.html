@@ -9,7 +9,7 @@
     <h3 class="my-4">開催日: {{ kaisaiDt }}</h3>
     <div class="container">
       <div class="row">
-        <div class="col-sm-4" *ngFor="let kaisaiRecord of kaisaiList">
+        <div class="col-sm-{{ 12 / kaisaiList.length}}" *ngFor="let kaisaiRecord of kaisaiList">
           <h4 class="my-3">{{ kaisaiRecord.kaisaiNm }}</h4>
           <table class="table-sm table-bordered table-hover mx-auto">
             <thead class="table-header">
