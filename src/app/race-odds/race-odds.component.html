@@ -17,7 +17,8 @@
               <a *ngFor="let raceRecord of raceSummaryMap.get(kaisaiRecord.kaisaiCd)" class="dropdown-item"
                 [class.alert-danger]="raceRecord.anaFlgCnt === 3" [class.alert-warning]="raceRecord.anaFlgCnt === 2"
                 [class.alert-info]="raceRecord.anaFlgCnt === 1.5" (click)="$event.preventDefault()"
-                [routerLink]="['/race-odds', raceRecord.kaisaiCd, raceRecord.raceNo]">{{ raceRecord.raceNo}}R</a>
+                [routerLink]="['/race-odds', raceRecord.kaisaiCd, raceRecord.raceNo]">
+                {{ raceRecord.raceNo}}R <span style="font-size: 80%">（{{ raceRecord.umaCnt }} 頭）</span></a>
             </div>
           </li>
         </ul>
