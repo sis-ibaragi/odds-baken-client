@@ -61,7 +61,10 @@
                 </td>
                 <td>{{ record.ninkiNo | number }}</td>
                 <td class="font-weight-bold" [class.table-info]="i < 4" [class.table-success]="i >= 4 && i < 8">
-                  {{ record.umaNo | number }}
+                  <span [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
+                    tooltipClass="uma-info-tooltip" (click)="toggleUmaInfo(tp, raceUmaMap.get(record.umaNo))">
+                    {{ record.umaNo | number }}
+                  </span>
                 </td>
                 <td>{{ record.umrnOdds | number: '1.1-1' }}</td>
                 <td>{{ record.diffRt | number: '1.2-2' }}</td>
@@ -82,7 +85,12 @@
             <tbody>
               <tr *ngFor="let record of tanOddsList" [class.table-danger]="record.idoFlg" class="py-0 text-right">
                 <td>{{ record.ninkiNo | number }}</td>
-                <td class="font-weight-bold">{{ record.umaNo }}</td>
+                <td class="font-weight-bold">
+                  <span [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
+                    tooltipClass="uma-info-tooltip" (click)="toggleUmaInfo(tp, raceUmaMap.get(record.umaNo))">
+                    {{ record.umaNo | number }}
+                  </span>
+                </td>
                 <td>{{ record.tanOdds | number: '1.1-1' }}</td>
               </tr>
             </tbody>
@@ -101,7 +109,12 @@
             <tbody>
               <tr *ngFor="let record of fukuOddsList" [class.table-danger]="record.idoFlg" class="py-0 text-right">
                 <td>{{ record.ninkiNo | number }}</td>
-                <td class="font-weight-bold">{{ record.umaNo }}</td>
+                <td class="font-weight-bold">
+                  <span [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
+                    tooltipClass="uma-info-tooltip" (click)="toggleUmaInfo(tp, raceUmaMap.get(record.umaNo))">
+                    {{ record.umaNo | number }}
+                  </span>
+                </td>
                 <td>{{ record.fukuOdds | number: '1.1-1' }}</td>
               </tr>
             </tbody>
@@ -128,7 +141,10 @@
                 <td class="font-weight-bold" [class.table-danger]="
                     tnpkOddsDiffMap.get(record.umaNo).tanUpFlg && tnpkOddsDiffMap.get(record.umaNo).fukuUpFlg
                   ">
-                  {{ record.umaNo | number }}
+                  <span [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
+                    tooltipClass="uma-info-tooltip" (click)="toggleUmaInfo(tp, raceUmaMap.get(record.umaNo))">
+                    {{ record.umaNo | number }}
+                  </span>
                 </td>
                 <td>{{ tnpkOddsDiffMap.get(record.umaNo).tanOdds1 | number: '1.1-1' }}</td>
                 <td>{{ tnpkOddsDiffMap.get(record.umaNo).tanOdds2 | number: '1.1-1' }}</td>
@@ -146,5 +162,12 @@
         </div>
       </div>
     </div>
+  </section>
+  <section>
+    <ng-template #tipContent let-wakuNo="wakuNo" let-umaNo="umaNo" let-umaNm="umaNm" let-jockeyNm="jockeyNm">
+      {{wakuNo}} 枠 {{umaNo}} 番<br />
+      {{umaNm}}<br />
+      {{jockeyNm}}
+    </ng-template>
   </section>
 </main>

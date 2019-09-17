@@ -1,3 +1,7 @@
 .table-header {
   white-space: nowrap;
 }
+
+.uma-info-tooltip .tooltip-inner {
+  text-align: left;
+}

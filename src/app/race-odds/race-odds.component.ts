@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewChecked, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
-import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTabChangeEvent, NgbTabset, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 import { RaceOddsService } from '../service/race-odds.service';
 import { RaceSummaryService } from '../service/race-summary.service';
@@ -19,6 +19,7 @@ import { RaceUmaRecord } from '../record/race-uma-record';
   selector: 'app-race-odds',
   templateUrl: './race-odds.component.html',
   styleUrls: ['./race-odds.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RaceOddsComponent implements OnInit, AfterViewChecked {
 
@@ -152,5 +153,13 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
 
   selectMark(record: UmrnOddsRecord, markCd: string): void {
     this.raceOddsService.postUmaMark(this.kaisaiCd, this.raceNo, record.umaNo, markCd);
+  }
+
+  toggleUmaInfo(tooltip: NgbTooltip, record: RaceUmaRecord): void {
+    if (tooltip.isOpen()) {
+      tooltip.close();
+    } else {
+      tooltip.open({ wakuNo: record.wakuNo, umaNo: record.umaNo, umaNm: record.umaNm, jockeyNm: record.jockeyNm });
+    }
   }
 }
