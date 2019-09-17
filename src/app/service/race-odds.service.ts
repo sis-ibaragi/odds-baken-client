@@ -11,6 +11,7 @@ import { OddsTimeRecord } from '../record/odds-time-record';
 import { ValueLabelRecord } from '../record/value-label-record';
 import { markOptions } from './mock/mock-mark-option-list';
 import { KaisaiRecord } from '../record/kaisai-record';
+import { RaceUmaRecord } from '../record/race-uma-record';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ import { KaisaiRecord } from '../record/kaisai-record';
 export class RaceOddsService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getKaisaiInfo(kaisaiCd: string): Promise<KaisaiRecord> {
     return this.http
@@ -79,6 +80,20 @@ export class RaceOddsService {
         return map;
       })
       .catch(this.handleError);
+  }
+
+  getRaceUmaList(kaisaiCd: string, raceNo: number): Promise<Map<number, RaceUmaRecord>> {
+    return this.http
+      .get(`${environment.serverUrl}/api/race/odds/${kaisaiCd}/${raceNo}/umalist`)
+      .pipe(first())
+      .toPromise().then(data => data as RaceUmaRecord[])
+      .then(list => {
+        const map = new Map<number, RaceUmaRecord>();
+        list.forEach(element => {
+          map.set(element.umaNo, element);
+        });
+        return map;
+      }).catch(this.handleError);
   }
 
   postUmaMark(kaisaiCd: string, raceNo: number, umaNo: number, markCd: string): void {
