@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
@@ -13,6 +13,7 @@ import { OddsTimeRecord } from '../record/odds-time-record';
 import { ValueLabelRecord } from '../record/value-label-record';
 import { KaisaiRecord } from '../record/kaisai-record';
 import { RaceSummaryRecord } from '../record/race-summary-record';
+import { RaceUmaRecord } from '../record/race-uma-record';
 
 @Component({
   selector: 'app-race-odds',
@@ -47,6 +48,7 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
   tanOddsList: TanOddsRecord[];
   fukuOddsList: FukuOddsRecord[];
   tnpkOddsDiffMap: Map<number, TnpkOddsDiffRecord>;
+  raceUmaMap: Map<number, RaceUmaRecord>;
   markOptions: ValueLabelRecord[];
 
   oddsDiffTimeFrom: string;
@@ -66,6 +68,7 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
       this.getMarkOptions();
       this.getKaisaiInfo(this.kaisaiCd);
       this.getOddsTimeList(this.kaisaiCd, this.raceNo);
+      this.getRaceUmaList(this.kaisaiCd, this.raceNo);
     });
   }
 
@@ -134,6 +137,9 @@ export class RaceOddsComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  getRaceUmaList(kaisaiCd: string, raceNo: number): void {
+    this.raceOddsService.getRaceUmaList(kaisaiCd, raceNo).then(map => (this.raceUmaMap = map));
+  }
   getMarkOptions(): void {
     this.raceOddsService.getMarkOptions().then(list => (this.markOptions = list));
   }
