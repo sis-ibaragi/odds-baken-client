@@ -2,6 +2,10 @@
   white-space: nowrap;
 }
 
+.uma-no {
+  cursor: pointer;
+}
+
 .uma-info-tooltip .tooltip-inner {
   text-align: left;
 }

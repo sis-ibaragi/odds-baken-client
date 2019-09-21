@@ -61,7 +61,7 @@
                 </td>
                 <td>{{ record.ninkiNo | number }}</td>
                 <td class="font-weight-bold" [class.table-info]="i < 4" [class.table-success]="i >= 4 && i < 8">
-                  <span [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
+                  <span class="uma-no" [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
                     tooltipClass="uma-info-tooltip" (click)="toggleUmaInfo(tp, raceUmaMap.get(record.umaNo))">
                     {{ record.umaNo | number }}
                   </span>
@@ -86,7 +86,7 @@
               <tr *ngFor="let record of tanOddsList" [class.table-danger]="record.idoFlg" class="py-0 text-right">
                 <td>{{ record.ninkiNo | number }}</td>
                 <td class="font-weight-bold">
-                  <span [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
+                  <span class="uma-no" [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
                     tooltipClass="uma-info-tooltip" (click)="toggleUmaInfo(tp, raceUmaMap.get(record.umaNo))">
                     {{ record.umaNo | number }}
                   </span>
@@ -110,7 +110,7 @@
               <tr *ngFor="let record of fukuOddsList" [class.table-danger]="record.idoFlg" class="py-0 text-right">
                 <td>{{ record.ninkiNo | number }}</td>
                 <td class="font-weight-bold">
-                  <span [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
+                  <span class="uma-no" [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
                     tooltipClass="uma-info-tooltip" (click)="toggleUmaInfo(tp, raceUmaMap.get(record.umaNo))">
                     {{ record.umaNo | number }}
                   </span>
