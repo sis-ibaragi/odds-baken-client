@@ -141,7 +141,7 @@
                 <td class="font-weight-bold" [class.table-danger]="
                     tnpkOddsDiffMap.get(record.umaNo).tanUpFlg && tnpkOddsDiffMap.get(record.umaNo).fukuUpFlg
                   ">
-                  <span [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
+                  <span class="uma-no" [ngbTooltip]="tipContent" triggers="manual" placement="right" #tp="ngbTooltip"
                     tooltipClass="uma-info-tooltip" (click)="toggleUmaInfo(tp, raceUmaMap.get(record.umaNo))">
                     {{ record.umaNo | number }}
                   </span>
